@@ -1,0 +1,43 @@
+{
+  "name": "teste-backend-nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:GustavoSantosCS/teste-backend-nodejs.git",
+  "author": "Gustavo Santos <gustavosantos.development@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/server.js",
+    "prebuild": "rimraf dist",
+    "build": "tsc -p tsconfig-build.json",
+    "build:watch": "tsc -p tsconfig-build.json -w",
+    "dev": "ts-node-dev --clear --respawn --transpile-only --ignore-watch node_modules --no-notify src/server",
+    "test": "jest --passWithNoTests --runInBand --no-cache",
+    "test:unit": "npm test -- --watch -c jest-unit.config.js",
+    "test:integration": "npm test -- --watch -c jest-integration.config.js",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "check": "npm-check -s -u"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.0.2",
+    "@types/redis": "^2.8.28",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.1.3",
+    "ts-jest": "^26.5.6",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.4"
+  }
+}
