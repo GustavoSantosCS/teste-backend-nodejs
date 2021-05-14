@@ -8,10 +8,10 @@
     "rootDirs": ["src", "tests"],
     "baseUrl": "src",
     "paths": {
-      "@/tests/*": ["../tests/*"],
-      "@/*": ["*"]
+      "@tests/*": ["../tests/*"],
+      "@/*": ["./*"]
     }
   },
-  "include": ["src/*", "tests"],
+  "include": ["src", "tests"],
   "exclude": []
 }
