@@ -3,6 +3,8 @@ import { GeolocationService } from '@/infra/protocols';
 import { makeOccurrenceMock } from '@tests/domain/models/mocks';
 import { makeGeolocationServiceSpy } from '@tests/infra/geolocation/mocks';
 import { DBAddOccurrence } from '@/data/implementations';
+import { left } from '@/shared';
+import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
 
 type MakeSutType = {
   sut: DBAddOccurrence
@@ -38,4 +40,18 @@ describe('Unit Test: DBAddOccurrence', () => {
       longitude: addOccurrenceFake.longitude,
     });
   });
+
+  it('should return AddressError if GeolocationService not fund', async () => {
+    const { sut, geolocationServiceSpy } = makeSut();
+    const error = new AddressNotFundError();
+    jest.spyOn(geolocationServiceSpy, 'getLocation')
+      .mockImplementationOnce(async () => left(error))
+    const addOccurrenceFake = makeSutDTO();
+
+    const response = await sut.add(addOccurrenceFake);
+
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toBe(error);
+  });
+
 })
