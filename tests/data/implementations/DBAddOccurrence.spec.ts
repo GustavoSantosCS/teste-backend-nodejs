@@ -1,7 +1,8 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases';
-import { GeolocationService } from '@/infra/protocols';
+import { GeolocationService, OccurrenceRepository } from '@/infra/protocols';
 import { makeOccurrenceMock } from '@tests/domain/models/mocks';
 import { makeGeolocationServiceSpy } from '@tests/infra/geolocation/mocks';
+import { makeOccurrenceRepositorySpy } from '@tests/infra/db/mongodb/mocks';
 import { DBAddOccurrence } from '@/data/implementations';
 import { left } from '@/shared';
 import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
@@ -9,13 +10,14 @@ import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
 type MakeSutType = {
   sut: DBAddOccurrence
   geolocationServiceSpy: GeolocationService
+  occurrenceRepositorySpy: OccurrenceRepository
 }
 
 const makeSut = (): MakeSutType => {
   const geolocationServiceSpy = makeGeolocationServiceSpy();
-  const sut = new DBAddOccurrence(geolocationServiceSpy);
-
-  return { sut, geolocationServiceSpy };
+  const occurrenceRepositorySpy = makeOccurrenceRepositorySpy();
+  const sut = new DBAddOccurrence(geolocationServiceSpy, occurrenceRepositorySpy);
+  return { sut, geolocationServiceSpy, occurrenceRepositorySpy };
 }
 
 const makeSutDTO = (): AddOccurrenceUseCase.DTO => {
@@ -52,6 +54,18 @@ describe('Unit Test: DBAddOccurrence', () => {
 
     expect(response.isLeft()).toBe(true);
     expect(response.value).toBe(error);
+  });
+
+  it('should call OccurrenceRepository whit correct values', async () => {
+    const { sut, occurrenceRepositorySpy } = makeSut();
+    const spy = jest.spyOn(occurrenceRepositorySpy, 'add');
+    const addOccurrenceFake = makeSutDTO();
+    const occurrenceFake = makeOccurrenceMock();
+    delete occurrenceFake.id;
+
+    await sut.add(addOccurrenceFake);
+
+    expect(spy).toBeCalledWith(occurrenceFake);
   });
 
 })
