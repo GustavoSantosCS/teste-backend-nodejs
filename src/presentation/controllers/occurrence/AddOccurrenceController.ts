@@ -9,7 +9,20 @@ export class AddOccurrenceController implements Controller {
   constructor(private readonly addOccurrenceUseCase: AddOccurrenceUseCase) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.addOccurrenceUseCase.add(httpRequest.body);
+    try {
+
+      this.addOccurrenceUseCase.add(httpRequest.body);
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: {
+          error: {
+            code: '03',
+            message: 'Erro no servidor.',
+          },
+        },
+      };
+    }
 
     return {
       statusCode: 400,
@@ -18,5 +31,6 @@ export class AddOccurrenceController implements Controller {
         message: 'Request inválido.',
       },
     };
+
   }
 }

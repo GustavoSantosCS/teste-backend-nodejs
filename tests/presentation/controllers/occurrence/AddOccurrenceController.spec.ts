@@ -178,4 +178,21 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     expect(spy).toBeCalledWith(httpRequest.body);
   });
+
+
+  it('should return 500 the InternalServerErro if AddOccurrenceUseCase throws', async () => {
+    const { sut, addOccurrenceUseCaseSpy } = makeSut();
+    jest.spyOn(addOccurrenceUseCaseSpy, 'add').mockImplementationOnce(() => { throw new Error() })
+
+    const httpResponse = await sut.handle(makeHttpRequestMock());
+
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual({
+      error: {
+        code: '03',
+        message: 'Erro no servidor.',
+      },
+    });
+
+  });
 });
