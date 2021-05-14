@@ -1,12 +1,16 @@
-(async () => {
-  async function main(test: string): Promise<string> {
-    return new Promise((resolve) =>
-      setTimeout(() => resolve(test.toUpperCase()), 1500)
-    );
-  }
+import 'module-alias/register';
+import app from '@/main/config/app';
+import * as env from '@/main/config/env';
+import { MongoHelper } from './infra/db/mongodb';
 
-  const aux = await main('Hello World');
+const url = `mongodb://${env.db.host}:${env.db.port}/${env.db.database}`;
 
-  console.clear();
-  console.log(aux);
-})();
+console.log(url);
+
+MongoHelper.connect(url).then(() =>{
+  app.listen(env.app.port, () => {
+    console.log('Backend Online');
+    console.log(`Click para acessar: http://localhost:${env.app.port}`);
+  });
+})
+.catch(console.log)

@@ -1,7 +1,7 @@
 import { GeolocationService } from '@/infra/protocols'
 import { AddressNotFundError } from '@/presentation/errors';
 import { left, right } from '@/shared';
-import { mapQuestApi } from '@/shared/config/env';
+import { mapQuestApi } from '@/main/config/env';
 import axios from 'axios'
 
 type ApiResponse = {
