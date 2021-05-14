@@ -1,6 +1,6 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases/AddOccurrenceUseCase';
 import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
-import { badRequest } from '@/utils/http';
+import { badRequest, serverError } from '@/utils/http';
 import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
 import { makeHttpRequestMock } from './mock/HttpRequestMock';
 
@@ -142,13 +142,6 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(makeHttpRequestMock());
 
-    expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual({
-      error: {
-        code: '03',
-        message: 'Erro no servidor.',
-      },
-    });
-
+    expect(httpResponse).toEqual(serverError());
   });
 });
