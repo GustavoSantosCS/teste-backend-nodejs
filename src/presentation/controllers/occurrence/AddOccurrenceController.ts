@@ -47,7 +47,10 @@ export class AddOccurrenceController implements Controller {
     try {
       const responseAddOccurrence = await this.addOccurrenceUseCase.add(body);
       if (responseAddOccurrence.isLeft()) {
-        return serverError();
+        return badRequest({
+          code: '02',
+          message: 'Endereço não encontrado para essa localidade.',
+        });
       }
       return ok(responseAddOccurrence.value);
     } catch (error) {

@@ -19,7 +19,7 @@
     "import/no-unresolved": "off",
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "import/extensions": "off",
     "max-classes-per-file": "off",
     "no-use-before-define": "off",
@@ -41,6 +41,7 @@
     ],
     "no-empty-function": "off",
     "no-useless-constructor": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "no-redeclare": "off"
   }
 }

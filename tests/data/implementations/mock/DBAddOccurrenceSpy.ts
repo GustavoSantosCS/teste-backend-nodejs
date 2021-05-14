@@ -1,13 +1,13 @@
 import { Occurrence } from '@/domain/models';
 import { AddOccurrenceUseCase } from '@/domain/usecases';
-import { InternalServerError } from '@/presentation/errors';
+import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
 import { Either, right } from '@/shared';
 import { makeOccurrenceMock } from '@tests/domain/models/mock';
 
 class DBAddOccurrenceSpy implements AddOccurrenceUseCase {
   async add(
-    newOccurrence: Occurrence
-  ): Promise<Either<InternalServerError, Occurrence>> {
+    occurrence: AddOccurrenceUseCase.DTO
+  ): Promise<Either<AddressNotFundError, Occurrence>> {
     return right(makeOccurrenceMock());
   }
 }

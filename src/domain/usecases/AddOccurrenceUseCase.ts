@@ -1,9 +1,24 @@
 import { Either } from '@/shared';
-import { InternalServerError } from '@/presentation/errors';
+import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
 import { Occurrence } from '../models/Occurrence';
 
 export interface AddOccurrenceUseCase {
-  add(
-    newOccurrence: Occurrence
-  ): Promise<Either<InternalServerError, Occurrence>>;
+  add(newOccurrence: AddOccurrenceUseCase.DTO): Promise<AddOccurrenceUseCase.Response>;
+}
+
+export namespace AddOccurrenceUseCase {
+  export type DTO = {
+    latitude: string
+    longitude: string
+    denunciante: {
+      nome: string,
+      cpf: string,
+    }
+    denuncia: {
+      titulo: string,
+      descricao: string
+    }
+  }
+
+  export type Response = Either<AddressNotFundError, Occurrence>;
 }

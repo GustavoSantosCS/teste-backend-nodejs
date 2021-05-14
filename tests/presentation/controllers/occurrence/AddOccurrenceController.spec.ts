@@ -1,5 +1,7 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases/AddOccurrenceUseCase';
 import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
+import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
+import { left } from '@/shared';
 import { badRequest, ok, serverError } from '@/utils/http';
 import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
 import { makeOccurrenceMock } from '@tests/domain/models/mock';
@@ -23,6 +25,12 @@ const makeSut = (): MakeSutType => {
 const makeRequesInvalid = () => badRequest({
   code: '01',
   message: 'Request inválido.',
+})
+
+
+const makeAddressInvalid = () => badRequest({
+  code: '02',
+  message: 'Endereço não encontrado para essa localidade.',
 })
 
 describe('Unit Test: AddOccurrenceController', () => {
@@ -122,6 +130,17 @@ describe('Unit Test: AddOccurrenceController', () => {
     const httpResponse = await sut.handle(makeHttpRequestMock());
 
     expect(httpResponse).toEqual(serverError());
+  });
+
+  it('should return 400 if AddOccurrenceUseCase return AddressNotFundErro', async () => {
+    const { sut, addOccurrenceUseCaseSpy } = makeSut();
+    jest.spyOn(addOccurrenceUseCaseSpy, 'add').mockImplementationOnce(
+      async () => left(new AddressNotFundError())
+    );
+
+    const httpResponse = await sut.handle(makeHttpRequestMock());
+
+    expect(httpResponse).toEqual(makeAddressInvalid());
   });
 
   it('should return 200 if all success', async () => {
