@@ -1,11 +1,16 @@
+import { AddOccurrenceUseCase } from '@/domain/usecases';
 import {
   Controller,
   HttpRequest,
-  HttpResponse,
+  HttpResponse
 } from '@/presentation/protocols';
 
 export class AddOccurrenceController implements Controller {
+  constructor(private readonly addOccurrenceUseCase: AddOccurrenceUseCase) { }
+
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    this.addOccurrenceUseCase.add(httpRequest.body);
+
     return {
       statusCode: 400,
       body: {

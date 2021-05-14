@@ -1,13 +1,22 @@
+import { AddOccurrenceUseCase } from '@/domain/usecases/AddOccurrenceUseCase';
 import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
+import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
 import { makeHttpRequestMock } from './mock/HttpRequestMock';
 
 type MakeSutType = {
   sut: AddOccurrenceController;
+  addOccurrenceUseCaseSpy: AddOccurrenceUseCase;
 };
 
-const makeSut = (): MakeSutType => ({
-  sut: new AddOccurrenceController(),
-});
+const makeSut = (): MakeSutType => {
+  const addOccurrenceUseCaseSpy = makeDBAddOccurrenceSpy();
+  const sut = new AddOccurrenceController(addOccurrenceUseCaseSpy);
+
+  return {
+    sut,
+    addOccurrenceUseCaseSpy,
+  };
+};
 
 describe('Unit Test: AddOccurrenceController', () => {
   it('should return 400 and InvalidRequestError if titulo is not provider', async () => {
@@ -158,5 +167,15 @@ describe('Unit Test: AddOccurrenceController', () => {
       code: '01',
       message: 'Request inválido.',
     });
+  });
+
+  it('should call the AddOccurrenceUseCase with correct values', async () => {
+    const { sut, addOccurrenceUseCaseSpy } = makeSut();
+    const httpRequest = makeHttpRequestMock();
+    const spy = jest.spyOn(addOccurrenceUseCaseSpy, 'add');
+
+    await sut.handle(httpRequest);
+
+    expect(spy).toBeCalledWith(httpRequest.body);
   });
 });
