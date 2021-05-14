@@ -1,23 +1,26 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases';
-import { GeolocationService, OccurrenceRepository } from '@/infra/protocols';
+import { CacheProvider, GeolocationService, OccurrenceRepository } from '@/infra/protocols';
 import { makeOccurrenceMock } from '@tests/domain/models/mocks';
 import { makeGeolocationServiceSpy } from '@tests/infra/geolocation/mocks';
 import { makeOccurrenceRepositorySpy } from '@tests/infra/db/mongodb/mocks';
 import { DBAddOccurrence } from '@/data/implementations';
 import { left } from '@/shared';
 import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
+import { makeCacheProviderRedisSpy } from '@tests/infra/db/redis/mocks/CacheProviderRedisSpy';
 
 type MakeSutType = {
   sut: DBAddOccurrence
   geolocationServiceSpy: GeolocationService
   occurrenceRepositorySpy: OccurrenceRepository
+  cacheProvider: CacheProvider
 }
 
 const makeSut = (): MakeSutType => {
   const geolocationServiceSpy = makeGeolocationServiceSpy();
   const occurrenceRepositorySpy = makeOccurrenceRepositorySpy();
-  const sut = new DBAddOccurrence(geolocationServiceSpy, occurrenceRepositorySpy);
-  return { sut, geolocationServiceSpy, occurrenceRepositorySpy };
+  const cacheProvider = makeCacheProviderRedisSpy();
+  const sut = new DBAddOccurrence(geolocationServiceSpy, occurrenceRepositorySpy, cacheProvider);
+  return { sut, geolocationServiceSpy, occurrenceRepositorySpy , cacheProvider};
 }
 
 const makeSutDTO = (): AddOccurrenceUseCase.DTO => {
