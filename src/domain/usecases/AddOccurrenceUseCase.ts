@@ -1,5 +1,5 @@
 import { Either } from '@/shared';
-import { InternalServerError } from '@/shared/errors';
+import { InternalServerError } from '@/presentation/errors';
 import { Occurrence } from '../models/Occurrence';
 
 export interface AddOccurrenceUseCase {
