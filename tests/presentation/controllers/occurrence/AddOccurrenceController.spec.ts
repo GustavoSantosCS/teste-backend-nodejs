@@ -1,5 +1,6 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases/AddOccurrenceUseCase';
 import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
+import { badRequest } from '@/utils/http';
 import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
 import { makeHttpRequestMock } from './mock/HttpRequestMock';
 
@@ -18,6 +19,11 @@ const makeSut = (): MakeSutType => {
   };
 };
 
+const makeRequesInvalid = () => badRequest({
+  code: '01',
+  message: 'Request inválido.',
+})
+
 describe('Unit Test: AddOccurrenceController', () => {
   it('should return 400 and InvalidRequestError if titulo is not provider', async () => {
     const { sut } = makeSut();
@@ -26,12 +32,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if descricao is not provider', async () => {
@@ -41,12 +42,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if latitude is not provider', async () => {
@@ -56,12 +52,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if longitude is not provider', async () => {
@@ -71,12 +62,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denunciante is not provider', async () => {
@@ -86,12 +72,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denunciante.name is not provider', async () => {
@@ -101,12 +82,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denunciante.cpf is not provider', async () => {
@@ -116,12 +92,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denuncia is not provider', async () => {
@@ -131,12 +102,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denuncia.titulo is not provider', async () => {
@@ -146,12 +112,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should return 400 and InvalidRequestError if denuncia.descricao is not provider', async () => {
@@ -161,12 +122,7 @@ describe('Unit Test: AddOccurrenceController', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-
-    expect(httpResponse.body).toEqual({
-      code: '01',
-      message: 'Request inválido.',
-    });
+    expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
   it('should call the AddOccurrenceUseCase with correct values', async () => {

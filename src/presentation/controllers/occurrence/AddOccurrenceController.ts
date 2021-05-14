@@ -4,6 +4,7 @@ import {
   HttpRequest,
   HttpResponse
 } from '@/presentation/protocols';
+import { badRequest, serverError } from '@/utils/http';
 
 export class AddOccurrenceController implements Controller {
   constructor(private readonly addOccurrenceUseCase: AddOccurrenceUseCase) { }
@@ -13,24 +14,14 @@ export class AddOccurrenceController implements Controller {
 
       this.addOccurrenceUseCase.add(httpRequest.body);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: {
-          error: {
-            code: '03',
-            message: 'Erro no servidor.',
-          },
-        },
-      };
+      return serverError()
     }
 
-    return {
-      statusCode: 400,
-      body: {
-        code: '01',
-        message: 'Request inválido.',
-      },
-    };
+    return badRequest({
+      code: '01',
+      message: 'Request inválido.',
+    })
+  };
 
-  }
 }
+
