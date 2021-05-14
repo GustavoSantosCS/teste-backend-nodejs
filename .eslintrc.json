@@ -22,6 +22,12 @@
     "no-unused-vars": "warn",
     "import/extensions": "off",
     "max-classes-per-file": "off",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": { "multiline": true }
+      }
+    ]
   }
 }
