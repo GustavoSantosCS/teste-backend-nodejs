@@ -170,3 +170,35 @@ Irá ser avaliado:
 Boa sorte!
 
 Equipe **#roga_rocks**
+
+<h2 id="instalacao">:closed_book: Instalação </h2>
+
+<h3>Pré-requisitos </h3>
+
+<h4>Dependências: </h4>
+
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org/pt-br/)
+- [Mongo](https://www.mongodb.com/)
+- [Redis](https://redis.io/)
+
+```bash
+# Clone este repositório.
+$ git clone github.com/GustavoSantosCS/teste-backend-nodejs
+
+# Vá para a pasta podcastr
+$ cd teste-backend-nodejs
+
+# Instale as dependências
+$ npm install / yarn install
+
+# Execute build da aplicação
+$ npm run build / yarn build
+
+# Gerar o arquivo .env com as suas configurações, use o .exemplo.env como guia
+
+# Execute aplicação
+$ npm start / yarn start
+
+# O app vai está rodando na porta 3000 - acesse <http://localhost:3000>
+```
