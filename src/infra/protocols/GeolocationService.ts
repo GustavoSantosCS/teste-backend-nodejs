@@ -13,15 +13,13 @@ export namespace GeolocationService {
     longitude: number;
   };
 
-  export type Response = Either<
-    AddressNotFundError,
-    {
-      logradouro: string;
-      bairro: string;
-      cidade: string;
-      estado: string;
-      pais: string;
-      cep: string;
-    }
-  >;
+  export type Address = {
+    logradouro: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+    pais: string;
+    cep: string;
+  }
+  export type Response = Either<AddressNotFundError, Address>;
 }
