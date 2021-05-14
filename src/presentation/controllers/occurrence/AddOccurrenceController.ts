@@ -4,23 +4,55 @@ import {
   HttpRequest,
   HttpResponse
 } from '@/presentation/protocols';
-import { badRequest, serverError } from '@/utils/http';
+import { badRequest, ok, serverError } from '@/utils/http';
 
 export class AddOccurrenceController implements Controller {
   constructor(private readonly addOccurrenceUseCase: AddOccurrenceUseCase) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    try {
+    const { body } = httpRequest;
 
-      this.addOccurrenceUseCase.add(httpRequest.body);
+    const requiredFields = [
+      'latitude',
+      'longitude',
+      'denunciante',
+      'denuncia',
+    ];
+
+    for (const field of requiredFields) {
+      if (!body[field]) return badRequest(
+        {
+          code: '01',
+          message: 'Request inválido.',
+        }
+      );
+    }
+
+    const { nome, cpf } = body.denunciante;
+    if (!nome || !cpf) return badRequest(
+      {
+        code: '01',
+        message: 'Request inválido.',
+      }
+    );
+
+    const { titulo, descricao } = body.denuncia;
+    if (!titulo || !descricao) return badRequest(
+      {
+        code: '01',
+        message: 'Request inválido.',
+      }
+    );
+
+    try {
+      const responseAddOccurrence = await this.addOccurrenceUseCase.add(body);
+      if (responseAddOccurrence.isLeft()) {
+        return serverError();
+      }
+      return ok(responseAddOccurrence.value);
     } catch (error) {
       return serverError()
     }
-
-    return badRequest({
-      code: '01',
-      message: 'Request inválido.',
-    })
   };
 
 }

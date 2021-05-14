@@ -40,6 +40,7 @@
       }
     ],
     "no-empty-function": "off",
-    "no-useless-constructor": "off"
+    "no-useless-constructor": "off",
+    "no-restricted-syntax": "off"
   }
 }

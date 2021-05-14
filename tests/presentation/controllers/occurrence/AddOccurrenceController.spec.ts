@@ -1,7 +1,8 @@
 import { AddOccurrenceUseCase } from '@/domain/usecases/AddOccurrenceUseCase';
 import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
-import { badRequest, serverError } from '@/utils/http';
+import { badRequest, ok, serverError } from '@/utils/http';
 import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
+import { makeOccurrenceMock } from '@tests/domain/models/mock';
 import { makeHttpRequestMock } from './mock/HttpRequestMock';
 
 type MakeSutType = {
@@ -25,26 +26,6 @@ const makeRequesInvalid = () => badRequest({
 })
 
 describe('Unit Test: AddOccurrenceController', () => {
-  it('should return 400 and InvalidRequestError if titulo is not provider', async () => {
-    const { sut } = makeSut();
-    const httpRequest = makeHttpRequestMock();
-    delete httpRequest.body.titulo;
-
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(makeRequesInvalid());
-  });
-
-  it('should return 400 and InvalidRequestError if descricao is not provider', async () => {
-    const { sut } = makeSut();
-    const httpRequest = makeHttpRequestMock();
-    delete httpRequest.body.descricao;
-
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(makeRequesInvalid());
-  });
-
   it('should return 400 and InvalidRequestError if latitude is not provider', async () => {
     const { sut } = makeSut();
     const httpRequest = makeHttpRequestMock();
@@ -75,10 +56,10 @@ describe('Unit Test: AddOccurrenceController', () => {
     expect(httpResponse).toEqual(makeRequesInvalid());
   });
 
-  it('should return 400 and InvalidRequestError if denunciante.name is not provider', async () => {
+  it('should return 400 and InvalidRequestError if denunciante.nome is not provider', async () => {
     const { sut } = makeSut();
     const httpRequest = makeHttpRequestMock();
-    delete httpRequest.body.denunciante.name;
+    delete httpRequest.body.denunciante.nome;
 
     const httpResponse = await sut.handle(httpRequest);
 
@@ -131,10 +112,8 @@ describe('Unit Test: AddOccurrenceController', () => {
     const spy = jest.spyOn(addOccurrenceUseCaseSpy, 'add');
 
     await sut.handle(httpRequest);
-
     expect(spy).toBeCalledWith(httpRequest.body);
   });
-
 
   it('should return 500 the InternalServerErro if AddOccurrenceUseCase throws', async () => {
     const { sut, addOccurrenceUseCaseSpy } = makeSut();
@@ -143,5 +122,13 @@ describe('Unit Test: AddOccurrenceController', () => {
     const httpResponse = await sut.handle(makeHttpRequestMock());
 
     expect(httpResponse).toEqual(serverError());
+  });
+
+  it('should return 200 if all success', async () => {
+    const { sut } = makeSut();
+
+    const httpResponse = await sut.handle(makeHttpRequestMock());
+
+    expect(httpResponse).toEqual(ok(makeOccurrenceMock()));
   });
 });
