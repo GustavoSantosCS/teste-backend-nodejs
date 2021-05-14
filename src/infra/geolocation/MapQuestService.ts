@@ -1,5 +1,6 @@
 import { GeolocationService } from '@/infra/protocols'
-import { right } from '@/shared';
+import { AddressNotFundError } from '@/presentation/errors';
+import { left, right } from '@/shared';
 import { mapQuestApi } from '@/shared/config/env';
 import axios from 'axios'
 
@@ -28,6 +29,12 @@ export class MapQuestService implements GeolocationService {
     const url = `http://www.mapquestapi.com/geocoding/v1/reverse?key=${key}&location=${latitude},${longitude}8&includeRoadMetadata=true&includeNearestIntersection=true`;
     const { data } = await axios.get<ApiResponse>(url)
 
+    const [address] = data.results[0].locations;
+
+    if (!address) {
+      return left(new AddressNotFundError());
+    }
+
     const {
       street: logradouro,
       adminArea6: bairro,
@@ -35,7 +42,7 @@ export class MapQuestService implements GeolocationService {
       adminArea3: estado,
       adminArea1: pais,
       postalCode: cep,
-    } = data.results[0].locations[0];
+    } = address;
     return right({
       logradouro,
       bairro,
