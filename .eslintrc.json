@@ -42,6 +42,7 @@
     "no-empty-function": "off",
     "no-useless-constructor": "off",
     "no-restricted-syntax": "off",
-    "no-redeclare": "off"
+    "no-redeclare": "off",
+    "radix": "off"
   }
 }

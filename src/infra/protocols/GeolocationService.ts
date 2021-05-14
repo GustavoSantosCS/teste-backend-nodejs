@@ -21,5 +21,6 @@ export namespace GeolocationService {
     pais: string;
     cep: string;
   }
+
   export type Response = Either<AddressNotFundError, Address>;
 }
