@@ -20,7 +20,9 @@
     "check": "npm-check -s -u"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.4",
     "@types/jest": "^26.0.23",
+    "@types/mongodb": "^3.6.12",
     "@types/node": "^15.0.2",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
@@ -47,6 +49,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "dotenv": "^9.0.2"
+    "dotenv": "^9.0.2",
+    "mongodb": "^3.6.6"
   }
 }
