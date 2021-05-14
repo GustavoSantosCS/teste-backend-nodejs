@@ -3,9 +3,9 @@ import { AddOccurrenceController } from '@/presentation/controllers/occurrence';
 import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
 import { left } from '@/shared';
 import { badRequest, ok, serverError } from '@/utils/http';
-import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mock/DBAddOccurrenceSpy';
-import { makeOccurrenceMock } from '@tests/domain/models/mock';
-import { makeHttpRequestMock } from './mock/HttpRequestMock';
+import { makeDBAddOccurrenceSpy } from '@tests/data/implementations/mocks';
+import { makeOccurrenceMock } from '@tests/domain/models/mocks';
+import { makeHttpRequestMock } from './mocks';
 
 type MakeSutType = {
   sut: AddOccurrenceController;

@@ -1,13 +1,13 @@
-import { Occurrence } from '@/domain/models';
+import { OccurrenceRepository } from '@/infra/protocols';
+
 import { AddOccurrenceUseCase } from '@/domain/usecases';
-import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
-import { Either, right } from '@/shared';
-import { makeOccurrenceMock } from '@tests/domain/models/mock';
+import { right } from '@/shared';
+import { makeOccurrenceMock } from '@tests/domain/models/mocks';
 
 class DBAddOccurrenceSpy implements AddOccurrenceUseCase {
   async add(
     occurrence: AddOccurrenceUseCase.DTO
-  ): Promise<Either<AddressNotFundError, Occurrence>> {
+  ): Promise<AddOccurrenceUseCase.Response> {
     return right(makeOccurrenceMock());
   }
 }

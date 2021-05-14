@@ -8,8 +8,8 @@ export interface AddOccurrenceUseCase {
 
 export namespace AddOccurrenceUseCase {
   export type DTO = {
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
     denunciante: {
       nome: string,
       cpf: string,
