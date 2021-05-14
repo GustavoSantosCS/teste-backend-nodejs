@@ -38,6 +38,8 @@
         "exports": "never",
         "functions": "never"
       }
-    ]
+    ],
+    "no-empty-function": "off",
+    "no-useless-constructor": "off"
   }
 }
