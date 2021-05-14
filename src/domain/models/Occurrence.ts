@@ -1,7 +1,15 @@
 export type Occurrence = {
   id?: number;
-  titulo: string;
-  descricao: string;
+  latitude: number;
+  longitude: number;
+  denunciante: {
+    nome: string;
+    cpf: string;
+  };
+  denuncia: {
+    titulo: string;
+    descricao: string;
+  };
   endereco: {
     logradouro: string;
     bairro: string;
@@ -9,9 +17,5 @@ export type Occurrence = {
     estado: string;
     pais: string;
     cep: string;
-  };
-  denunciante: {
-    nome: string;
-    cpf: string;
   };
 };
