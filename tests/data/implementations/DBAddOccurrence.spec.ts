@@ -68,4 +68,16 @@ describe('Unit Test: DBAddOccurrence', () => {
     expect(spy).toBeCalledWith(occurrenceFake);
   });
 
+  it('should return Occurrence if success', async () => {
+    const { sut } = makeSut();
+
+    const addOccurrenceFake = makeSutDTO();
+    const occurrenceFake = makeOccurrenceMock();
+
+    const response = await sut.add(addOccurrenceFake);
+
+    expect(response.isRight()).toBe(true);
+    expect(response.value).toEqual(occurrenceFake);
+  });
+
 })

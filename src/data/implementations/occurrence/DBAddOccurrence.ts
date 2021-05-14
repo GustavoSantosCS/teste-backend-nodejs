@@ -2,7 +2,7 @@ import { Occurrence } from '@/domain/models';
 import { AddOccurrenceUseCase } from '@/domain/usecases';
 import { GeolocationService, OccurrenceRepository } from '@/infra/protocols';
 import { AddressNotFundError } from '@/presentation/errors/AddressNotFundError';
-import { Either, left } from '@/shared';
+import { Either, left, right } from '@/shared';
 
 export class DBAddOccurrence implements AddOccurrenceUseCase {
   constructor(
@@ -36,9 +36,9 @@ export class DBAddOccurrence implements AddOccurrenceUseCase {
       longitude,
     }
 
-    this.occurrenceRepository.add(occurrence);
+    const { value: persistOccurrence } = await this.occurrenceRepository.add(occurrence);
 
-    return null;
+    return right(persistOccurrence as Occurrence);
   }
 
 }
