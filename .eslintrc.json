@@ -20,6 +20,8 @@
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "no-unused-vars": "warn",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "max-classes-per-file": "off",
+    "no-use-before-define": "off"
   }
 }
