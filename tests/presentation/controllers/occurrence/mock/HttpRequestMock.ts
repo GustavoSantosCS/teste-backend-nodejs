@@ -1,16 +1,15 @@
 import { HttpRequest } from '@/presentation/protocols';
+import { makeOccurrenceMock } from '@tests/domain/models/mock';
 
-export const makeHttpRequestMock = (): HttpRequest => ({
-  body: {
-    latitude: -9.56921,
-    longitude: -36.76422,
-    denunciante: {
-      nome: 'José de Oliveira',
-      cpf: '95761638037',
+export const makeHttpRequestMock = (): HttpRequest => {
+  const { latitude, longitude, denunciante, denuncia } = makeOccurrenceMock();
+
+  return {
+    body: {
+      latitude,
+      longitude,
+      denunciante,
+      denuncia,
     },
-    denuncia: {
-      titulo: 'Esgoto a céu aberto',
-      descricao: 'Existe um esgoto a céu aberto nesta localidade.',
-    },
-  },
-});
+  };
+};
