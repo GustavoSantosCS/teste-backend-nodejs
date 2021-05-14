@@ -25,4 +25,19 @@ describe('Unit Test: AddOccurrenceController', () => {
       message: 'Request inválido.',
     });
   });
+
+  it('should return 400 and InvalidRequestError if descricao is not provider', async () => {
+    const { sut } = makeSut();
+    const httpRequest = makeHttpRequestMock();
+    delete httpRequest.body.descricao;
+
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(400);
+
+    expect(httpResponse.body).toEqual({
+      code: '01',
+      message: 'Request inválido.',
+    });
+  });
 });
