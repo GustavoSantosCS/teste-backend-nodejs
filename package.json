@@ -15,6 +15,7 @@
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
     "test:integration": "npm test -- --watch -c jest-integration.config.js",
     "test:staged": "yarn test -- --findRelatedTests",
+    "test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
     "check": "npm-check -s -u"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "@types/node": "^15.0.2",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
+    "coveralls": "^3.1.0",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
